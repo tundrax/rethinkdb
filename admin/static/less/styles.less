@@ -130,6 +130,8 @@ h1.title {
     margin-bottom: 25px;
 }
 
+
+
 #main_view{
     height: 100%;
 }
@@ -2511,7 +2513,33 @@ TODO: retire this
                     line-height: 24px;
                     color: #5c6169;
                 }
-                &.availability { background: left center no-repeat url('images/live-icon.png'); }
+                &.availability {
+                    padding-left: 0px;
+                    .ionicon-table-status {
+                        @icon-size: 25px;
+                        width: 24px;
+                        height: 20px;
+                        margin-right: 5px;
+                        transition-property: opacity, fill;
+                        transition-duration: 1s, 1s;
+                        .outer-ring, .inner-ring, .dot {
+                            transition-property: opacity, fill;
+                            transition-duration: 1s, 1s;
+                        }
+                        &.ready {
+                            fill: rgb(109, 215, 109);
+                        }
+                        &.ready-but-with-caveats {
+                            fill: rgb(255, 140, 0);
+                            .outer-ring {
+                                fill: rgb(255, 200, 0);
+                            }
+                        }
+                        &.not-ready {
+                            fill: rgb(255, 71, 71);
+                        }
+                    }
+                }
                 &.masters { background: left center no-repeat url('images/layers-icon.png'); }
                 &.replicas { background: left center no-repeat url('images/grid-icon.png'); }
                 &.documents { background: left center no-repeat url('images/document-icon.png'); }

@@ -609,13 +609,32 @@ module 'TableView', ->
                 model: @model
 
         render: =>
-            @$el.html @template
+            obj = {
                 status: @model.get 'status'
                 total_keys: @model.get 'total_keys'
                 num_shards: @model.get 'num_shards'
                 num_available_shards: @model.get 'num_available_shards'
                 num_replicas: @model.get 'num_replicas'
                 num_available_replicas: @model.get 'num_available_replicas'
+            }
+
+            if obj.num_available_shards < obj.num_shards
+                obj.available_shards_class = 'no-availability'
+            else
+                obj.available_shards_class = 'full-availability'
+
+            if obj.num_available_replicas < obj.num_replicas
+                if obj.status?.ready_for_writes
+                    obj.available_replicas_class = 'reduced-availability'
+                else
+                    obj.available_replicas_class = 'no-availability'
+            else
+                obj.available_replicas_class = 'full-availability'
+
+            if obj.status?.ready_for_writes and not obj?.status.all_replicas_ready
+                obj.parenthetical = true
+
+            @$el.html @template obj
             @$('.availability').prepend(@indicator.$el)
 
             return @

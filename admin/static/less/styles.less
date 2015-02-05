@@ -2500,8 +2500,26 @@ TODO: retire this
 
         }
         .stat-row {
+            @orange: rgb(237, 173, 55);
+            @green: rgb(104, 200, 104);
+            @red: rgb(255, 71, 71);
             @height: 60px;
             border-top: thin solid #f0f0f0;
+            .reduced-availability, .full-availability, .no-availability {
+                margin-right: -5px;
+            }
+            .reduced-availability {
+                color: @orange;
+            }
+            .full-availability {
+                //nothing!
+            }
+            .no-availability {
+                color: @red;
+            }
+            .parenthetical {
+                color: #5c6169;
+            }
             p {
                 margin: 0px+(@height - 24)/2 0;
                 font-family: @sans;
@@ -2516,27 +2534,21 @@ TODO: retire this
                 &.availability {
                     padding-left: 0px;
                     .ionicon-table-status {
-                        @icon-size: 25px;
                         width: 24px;
                         height: 20px;
+                        margin-left: -4px;
                         margin-right: 5px;
-                        transition-property: opacity, fill;
-                        transition-duration: 1s, 1s;
-                        .outer-ring, .inner-ring, .dot {
-                            transition-property: opacity, fill;
-                            transition-duration: 1s, 1s;
-                        }
                         &.ready {
-                            fill: rgb(109, 215, 109);
+                            // all_replicas_ready == true
+                            fill: @green;
                         }
                         &.ready-but-with-caveats {
-                            fill: rgb(255, 140, 0);
-                            .outer-ring {
-                                fill: rgb(255, 200, 0);
-                            }
+                            // ready_for_writes == true
+                            fill: @orange;
                         }
                         &.not-ready {
-                            fill: rgb(255, 71, 71);
+                            // any other status for a table
+                            fill: @red;
                         }
                     }
                 }
